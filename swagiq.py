@@ -136,11 +136,11 @@ class Bot(discord.Client):
         # embed creation
         self.embed=discord.Embed(title="__**Vedantu LIVE**__", description="**Stardom**",color=0xFF0000)
         self.embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/738654832489678568/98fae5dd7d6ae2b2078b851a0c2a45d8.png?size=256")
-        self.embed.add_field(name="**Answer I**", value="0.0", inline=False)
-        self.embed.add_field(name="**Answer II**", value="0.0", inline=False)
-        self.embed.add_field(name="**Answer III**", value="0.0", inline=False)
+        self.embed.add_field(name="**Kill I**", value="0.0", inline=False)
+        self.embed.add_field(name="**Kill II**", value="0.0", inline=False)
+        self.embed.add_field(name="**Kill III**", value="0.0", inline=False)
         self.embed.add_field(name="Best Answer",value="<a:loading:695158657565851658>")
-        self.embed.set_footer(text=f"Daman saini#0605", \
+        self.embed.set_footer(text=f"Ayan singh#3930", \
             icon_url="https://cdn.discordapp.com/emojis/65144659163194133.gif?v=1")
         #await self.bot.add_reaction(embed,':spy:')
 
@@ -193,9 +193,9 @@ class Bot(discord.Client):
 #             if answer == 3:
 #                 three_check = ":x:"            
  
-        self.embed.set_field_at(0, name="**Answer I**", value="{0}{1}".format(lst_scores[0], one_check))
-        self.embed.set_field_at(1, name="**Answer II**", value="{0}{1}".format(lst_scores[1], two_check))
-        self.embed.set_field_at(2, name="**Answer III**", value="{0}{1}".format(lst_scores[2],three_check))
+        self.embed.set_field_at(0, name="**Kill I**", value="{0}{1}".format(lst_scores[0], one_check))
+        self.embed.set_field_at(1, name="**Kill II**", value="{0}{1}".format(lst_scores[1], two_check))
+        self.embed.set_field_at(2, name="**Kill III**", value="{0}{1}".format(lst_scores[2],three_check))
         self.embed.set_field_at(3,name="Best Answer",value=best_answer)
 
         if self.embed_msg is not None:
@@ -210,7 +210,7 @@ class Bot(discord.Client):
 
         await self.clear_results()
         await self.update_embeds()
-        await self.change_presence(activity=discord.Game(name='Vedantu is Live with daman saini#0605...'))
+        await self.change_presence(activity=discord.Game(name='Vedantu is Live with Ayan singh#3930...'))
 
     async def on_message(self, message):
 
@@ -226,7 +226,7 @@ class Bot(discord.Client):
                 await self.update_embeds()
                 self.embed_msg = \
                     await message.channel.send('',embed=self.embed)
-                await self.embed_msg.add_reaction("✅")
+                await self.embed_msg.add_reaction("✔️")
                 #await self.embed_msg.add_reaction("âœ”")
                 await self.embed_msg.add_reaction("❎")
                 #await self.embed_msg.add_reaction("âœ”")
@@ -241,7 +241,7 @@ class Bot(discord.Client):
            embed = discord.Embed(title="**__Vedantu__**", description="**Private Bot**", color=0x0000FF)
            embed.add_field(name="__Game__", value="*Vedantu Live*", inline=False)
            embed.add_field(name="__Bot Command__", value="v", inline=False)
-           embed.add_field(name="__Made By__daman saini#0605", value="*Anonymous*", inline=False)
+           embed.add_field(name="__Made By__ayan singh#3930", value="*Anonymous*", inline=False)
            await message.channel.send(embed=embed)
 
         # process votes
@@ -268,7 +268,7 @@ def bot_with_cyclic_update_process(update_event, answer_scores):
     upd_thread.start()
 
     loop = asyncio.get_event_loop()
-    loop.create_task(bot.start('NzQ5NTE1NjkxOTI4OTc3NDA4.X0tG4g.3x5lJlsrLulNoo4ABNlFY62mNv4'))
+    loop.create_task(bot.start('NzUwMjgxNDI1NDYyMzYyMTEy.X04QBw.cdz_M1u03-zPaIOAsAWVgTbWQSA'))
     loop.run_forever()
 
 
@@ -277,7 +277,7 @@ def selfbot_process(update_event, answer_scores):
     selfbot = SelfBot(update_event, answer_scores)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(selfbot.start('.NzIyNDc5ODMwMjQ3MDE0NTEx.X0aB4g.6N5AurtQTz2n3RViyuVngqlAcM0',
+    loop.create_task(selfbot.start('.NzI1MTY5MzExMTkwMDg5NzI5.X0tuKQ.sJOTX4THruXxOhnvJpHHxBDVBJo',
                                    bot=False))
     loop.run_forever()
 
