@@ -38,7 +38,7 @@ markscore = 400
 async def update_scores(content, answer_scores):
     global answer_pattern
 
-    m = kill_pattern.match(content)
+    m = answer_pattern.match(content)
     if m is None:
         return False
 
@@ -47,32 +47,32 @@ async def update_scores(content, answer_scores):
     if m[1] is None:
         if m[3] is None:
             if m[4] is None:
-                kill_scores[ind] += nomarkscore
+                answer_scores[ind] += nomarkscore
             else: # apg
                 if m[5] is None:
-                    kill_scores[ind] += apgscore
+                    answer_scores[ind] += apgscore
                 else:
-                    kill_scores[ind] += markscore
+                    answer_scores[ind] += markscore
 
         else: # 1? ...
-            kill_scores[ind] += markscore
+            answer_scores[ind] += markscore
 
     else: # contains not or n
         if m[3] is None:
-            kill_scores[ind] -= nomarkscore
+            answer_scores[ind] -= nomarkscore
         else:
-            kill_scores[ind] -= markscore
+            answer_scores[ind] -= markscore
 
     return True
 
 class SelfBot(discord.Client):
 
-    def __init__(self, update_event, kill_scores):
+    def __init__(self, update_event, answer_scores):
         super().__init__()
         global oot_channel_id_list
         self.oot_channel_id_list = oot_channel_id_list
         self.update_event = update_event
-        self.kill_scores = kill_scores
+        self.answer_scores = answer_scores
 
     async def on_ready(self):
         print("======================")
@@ -93,7 +93,7 @@ class SelfBot(discord.Client):
                 return False
 
             content = message.content.replace(' ', '').replace("'", "")
-            m = kill_pattern.match(content)
+            m = answer_pattern.match(content)
             if m is None:
                 return False
 
@@ -102,21 +102,21 @@ class SelfBot(discord.Client):
             if m[1] is None:
                 if m[3] is None:
                     if m[4] is None:
-                        self.kill_scores[ind] += nomarkscore
+                        self.answer_scores[ind] += nomarkscore
                     else: # apg
                         if m[5] is None:
-                            self.kill_scores[ind] += apgscore
+                            self.answer_scores[ind] += apgscore
                         else:
-                            self.kill_scores[ind] += markscore
+                            self.answer_scores[ind] += markscore
 
                 else: # 1? ...
-                    self.kill_scores[ind] += markscore
+                    self.answer_scores[ind] += markscore
 
             else: # contains not or n
                 if m[3] is None:
-                    self.kill_scores[ind] -= nomarkscore
+                    self.answer_scores[ind] -= nomarkscore
                 else:
-                    self.kill_scores[ind] -= markscore
+                    self.answer_scores[ind] -= markscore
 
             return True
 
@@ -126,28 +126,28 @@ class SelfBot(discord.Client):
 
 class Bot(discord.Client):
 
-    def __init__(self, kill_scores):
+    def __init__(self, answer_scores):
         super().__init__()
         self.bot_channel_id_list = []
         self.embed_msg = None
         self.embed_channel_id = None
-        self.kill_scores = kill_scores
+        self.answer_scores = answer_scores
 
         # embed creation
-        self.embed=discord.Embed(title="__**Vedantu Google**__", description="**```vedantu answer**",color=0xFF0000)
+        self.embed=discord.Embed(title="__**Vedantu LIVE**__", description="**Stardom**",color=0xFF0000)
         self.embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/738654832489678568/98fae5dd7d6ae2b2078b851a0c2a45d8.png?size=256")
-        self.embed.add_field(name="**KILL I**", value="0.0", inline=False)
-        self.embed.add_field(name="**KILL II**", value="0.0", inline=False)
-        self.embed.add_field(name="**KILL III**", value="0.0", inline=False)
-        self.embed.add_field(name="Best Kill",value="<a:loading:695158657565851658>")
-        self.embed.set_footer(text=f"Ayan singh#3930", \
+        self.embed.add_field(name="**Answer I**", value="0.0", inline=False)
+        self.embed.add_field(name="**Answer II**", value="0.0", inline=False)
+        self.embed.add_field(name="**Answer III**", value="0.0", inline=False)
+        self.embed.add_field(name="Best Answer",value="<a:loading:695158657565851658>")
+        self.embed.set_footer(text=f"Daman saini#0605", \
             icon_url="https://cdn.discordapp.com/emojis/65144659163194133.gif?v=1")
         #await self.bot.add_reaction(embed,':spy:')
 
 
     async def clear_results(self):
-        for i in range(len(self.kill_scores)):
-            self.kill_scores[i]=0
+        for i in range(len(self.answer_scores)):
+            self.answer_scores[i]=0
 
     async def update_embeds(self):
 
@@ -158,45 +158,45 @@ class Bot(discord.Client):
         three_check = ""
         
 
-        lst_scores = list(self.kill_scores)
+        lst_scores = list(self.answer_scores)
 
         highest = max(lst_scores)
 #         lowest = min(lst_scores)
-        kill = lst_scores.index(highest)+1
-        best_kill=":mag:"
+        answer = lst_scores.index(highest)+1
+        best_answer=":mag:"
 
         if highest > 0:
-            if kill == 1:
+            if answer == 1:
                 one_check = ":white_check_mark:"
             else:
                 one_check=":x:"
-            if kill ==1:
-                best_kill=":one: :tada:"
-            if kill == 2:
+            if answer ==1:
+                best_answer=":one: :tada:"
+            if answer == 2:
                 two_check = ":white_check_mark:"
             else:
                 two_check=":x:"
-            if kill==2:
-                best_kill=":two: :tada:"
-            if kill == 3:
+            if answer==2:
+                best_answer=":two: :tada:"
+            if answer == 3:
                 three_check = ":white_check_mark:"
             else:
                 three_check=":x:"
-            if kill ==3:
-                best_kill=":three: :tada:"
+            if answer ==3:
+                best_answer=":three: :tada:"
                 
 #         if lowest < 0:
-#             if kill == 1:
+#             if answer == 1:
 #                 one_check = ":x:"
-#             if kill == 2:
+#             if answer == 2:
 #                 two_check = ":x:"
-#             if kill == 3:
+#             if answer == 3:
 #                 three_check = ":x:"            
  
-        self.embed.set_field_at(0, name="**KILL I**", value="{0}{1}".format(lst_scores[0], one_check))
-        self.embed.set_field_at(1, name="**KILL II**", value="{0}{1}".format(lst_scores[1], two_check))
-        self.embed.set_field_at(2, name="**KILL III**", value="{0}{1}".format(lst_scores[2],three_check))
-        self.embed.set_field_at(3,name="Best Kill",value=best_kill)
+        self.embed.set_field_at(0, name="**Answer I**", value="{0}{1}".format(lst_scores[0], one_check))
+        self.embed.set_field_at(1, name="**Answer II**", value="{0}{1}".format(lst_scores[1], two_check))
+        self.embed.set_field_at(2, name="**Answer III**", value="{0}{1}".format(lst_scores[2],three_check))
+        self.embed.set_field_at(3,name="Best Answer",value=best_answer)
 
         if self.embed_msg is not None:
             await self.embed_msg.edit(embed=self.embed)
@@ -210,7 +210,7 @@ class Bot(discord.Client):
 
         await self.clear_results()
         await self.update_embeds()
-        await self.change_presence(activity=discord.Game(name='Vedantu is Live with Ayan singh#3930...'))
+        await self.change_presence(activity=discord.Game(name='Vedantu is Live with daman saini#0605...'))
 
     async def on_message(self, message):
 
@@ -218,7 +218,7 @@ class Bot(discord.Client):
         if message.author == self.user or message.guild == None:
             return
 
-        if message.content.lower() == "vd":
+        if message.content.lower() == "v":
             await message.delete()
             if BOT_OWNER_ROLE in [role.name for role in message.author.roles]:
                 self.embed_msg = None
@@ -226,7 +226,7 @@ class Bot(discord.Client):
                 await self.update_embeds()
                 self.embed_msg = \
                     await message.channel.send('',embed=self.embed)
-                await self.embed_msg.add_reaction("✔️")
+                await self.embed_msg.add_reaction("✅")
                 #await self.embed_msg.add_reaction("âœ”")
                 await self.embed_msg.add_reaction("❎")
                 #await self.embed_msg.add_reaction("âœ”")
@@ -238,16 +238,16 @@ class Bot(discord.Client):
 
         if message.content.startswith('&help'):
           if BOT_OWNER_ROLE in [role.name for role in message.author.roles]:
-           embed = discord.Embed(title="**__Vedantu__**", description="**Public Bot**", color=0x0000FF)
-           embed.add_field(name="__Game__", value="*Vedantu Google*", inline=False)
-           embed.add_field(name="__Bot Command__", value="vd", inline=False)
-           embed.add_field(name="__Made By__Ayan singh#3930", value="*Anonymous*", inline=False)
+           embed = discord.Embed(title="**__Vedantu__**", description="**Private Bot**", color=0x0000FF)
+           embed.add_field(name="__Game__", value="*Vedantu Live*", inline=False)
+           embed.add_field(name="__Bot Command__", value="v", inline=False)
+           embed.add_field(name="__Made By__daman saini#0605", value="*Anonymous*", inline=False)
            await message.channel.send(embed=embed)
 
         # process votes
         if message.channel.id == self.embed_channel_id:
             content = message.content.replace(' ', '').replace("'", "")
-            updated = await update_scores(content, self.kill_scores)
+            updated = await update_scores(content, self.answer_scores)
             if updated:
                 await self.update_embeds()
 
@@ -262,24 +262,22 @@ def bot_with_cyclic_update_process(update_event, answer_scores):
             f = asyncio.run_coroutine_threadsafe(bot.update_embeds(), bot.loop)
             #res = f.result()
 
-    bot = Bot(kill
-
-_scores)
+    bot = Bot(answer_scores)
 
     upd_thread = threading.Thread(target=cyclic_update, args=(bot, update_event))
     upd_thread.start()
 
     loop = asyncio.get_event_loop()
-    loop.create_task(bot.start('NzUwMjgxNDI1NDYyMzYyMTEy.X04QBw.9FNg4Qq3kcSrJid_ZgJbESIhrI8'))
+    loop.create_task(bot.start('NzQ5NTE1NjkxOTI4OTc3NDA4.X0tG4g.3x5lJlsrLulNoo4ABNlFY62mNv4'))
     loop.run_forever()
 
 
-def selfbot_process(update_event, kill_scores):
+def selfbot_process(update_event, answer_scores):
 
-    selfbot = SelfBot(update_event, kill_scores)
+    selfbot = SelfBot(update_event, answer_scores)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(selfbot.start('.NzI1MTY5MzExMTkwMDg5NzI5.X0tuKQ.sJOTX4THruXxOhnvJpHHxBDVBJo',
+    loop.create_task(selfbot.start('.NzIyNDc5ODMwMjQ3MDE0NTEx.X0aB4g.6N5AurtQTz2n3RViyuVngqlAcM0',
                                    bot=False))
     loop.run_forever()
 
@@ -290,11 +288,11 @@ if __name__ == '__main__':
     # shared event for embed update
     update_event = multiprocessing.Event()
 
-    # shared array with kill results
+    # shared array with answer results
     answer_scores = multiprocessing.Array(typecode_or_type='i', size_or_initializer=3)
 
-    p_bot = multiprocessing.Process(target=bot_with_cyclic_update_process, args=(update_event, kill_scores))
-    p_selfbot = multiprocessing.Process(target=selfbot_process, args=(update_event, kill_scores))
+    p_bot = multiprocessing.Process(target=bot_with_cyclic_update_process, args=(update_event, answer_scores))
+    p_selfbot = multiprocessing.Process(target=selfbot_process, args=(update_event, answer_scores))
 
     p_bot.start()
     p_selfbot.start()
