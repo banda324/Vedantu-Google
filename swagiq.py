@@ -133,7 +133,7 @@ class Bot(discord.Client):
         self.embed_channel_id = None
         self.answer_scores = answer_scores
 
-        # embed creation
+        # embed creationAnswer",value="<a:loading:695158657565851658>"
         self.embed=discord.Embed(title="__**Vedantu LIVE**__", description="**Stardom**",color=0xFF0000)
         self.embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/738654832489678568/98fae5dd7d6ae2b2078b851a0c2a45d8.png?size=256")
         self.embed.add_field(name="**Kill I**", value="0.0", inline=False)
